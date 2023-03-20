@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="107d3a03821d426e89d43d4bd86c46c8" Name="Diagram1">
+        <EntityTypeShape EntityType="practic21Model.DeliveryPoints" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.Manufacturers" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.Order" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.OrderStatuses" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.ProductCategories" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.Products" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.Roles" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.Suppliers" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.UnitsMeasurement" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="practic21Model.Users" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <AssociationConnector Association="practic21Model.FK__Order__PointDeli__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="practic21Model.FK__Products__Produc__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="practic21Model.FK__Order__CustomerI__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="practic21Model.FK__Order__OrderProd__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="practic21Model.FK__Order__OrderStat__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="practic21Model.FK__Products__Produc__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="practic21Model.FK__Products__Produc__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="practic21Model.FK__Products__Produc__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="practic21Model.FK__Users__UserRole__398D8EEE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
