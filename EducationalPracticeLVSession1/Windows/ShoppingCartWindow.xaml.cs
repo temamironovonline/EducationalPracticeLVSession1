@@ -12,15 +12,17 @@ namespace EducationalPracticeLVSession1
     public partial class ShoppingCartWindow : Window
     {
 
-        private List<Products> _checkDelete = new List<Products>();
+        private List<Products> _orderProducts = new List<Products>();
+
+        private int _returnCode = 0;
 
         public ShoppingCartWindow(List<Products> orderProducts)
         {
             InitializeComponent();
 
-            _checkDelete = orderProducts.ToList();
+            _orderProducts = orderProducts;
 
-            productList.ItemsSource = orderProducts.ToList();
+            productList.ItemsSource = _orderProducts.ToList();
 
             CalculateCostOrder();
         }
@@ -44,6 +46,10 @@ namespace EducationalPracticeLVSession1
             _amountDiscount = 0;
             _costWithDiscount = 0;
 
+
+            fullAmount.Visibility = Visibility.Collapsed;
+            amountDiscount.Visibility = Visibility.Collapsed;
+
             foreach (Products product in productList.Items)
             {
                 _costAllProducts += product.ProductCost * product.Count;
@@ -57,7 +63,7 @@ namespace EducationalPracticeLVSession1
                 fullAmount.Text = $"Общая стоимость: {_costAllProducts}";
                 fullAmount.Visibility = Visibility.Visible;
 
-                amountDiscount.Text = $"Сумма скидки: {_amountDiscount} ({(_amountDiscount * 100)/_costAllProducts}%)";
+                amountDiscount.Text = $"Сумма скидки: {_amountDiscount} ({(_amountDiscount * 100) / _costAllProducts}%)";
                 amountDiscount.Visibility = Visibility.Visible;
 
                 readyAmount.Text = $"К оплате: {_costWithDiscount}";
@@ -66,6 +72,15 @@ namespace EducationalPracticeLVSession1
             {
                 readyAmount.Text = $"К оплате: {_costWithDiscount}";
             }
+
+            if (_orderProducts.Count == 0)
+            {
+                MessageBox.Show("Корзина пустая. Окно будет закрыто", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
+                _returnCode = 1;
+                this.Close();
+            }
+
+
         }
 
         private Products _product;
@@ -103,7 +118,6 @@ namespace EducationalPracticeLVSession1
             }
         }
 
-
         private void currentDiscount_Loaded(object sender, RoutedEventArgs e)
         {
             TextBlock discountPriceBlock = (TextBlock)sender;
@@ -124,17 +138,57 @@ namespace EducationalPracticeLVSession1
             TextBox countBox = (TextBox)sender;
 
             string index = countBox.Uid;
-            Products product = DataBaseClass.dataBaseEntities.Products.FirstOrDefault(x => x.ProductArticleNumber == index);
 
             if (countBox.Text == "0")
             {
-                MessageBox.Show("");
-                _checkDelete.Remove(product);
+                DeleteRecord(index);
             }
 
-            DataBaseClass.dataBaseEntities.SaveChanges();
+        }
 
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button deleteButton = (Button)sender;
+
+            string index = deleteButton.Uid;
+
+            DeleteRecord(index);
+        }
+
+        private void DeleteRecord(string index)
+        {
+            Products product = DataBaseClass.dataBaseEntities.Products.FirstOrDefault(x => x.ProductArticleNumber == index);
+            
+            _orderProducts.Remove(product);
+           
+            productList.ItemsSource = _orderProducts.ToList();
             CalculateCostOrder();
+        }
+
+        public int GetReturnCode
+        {
+            get
+            {
+                return _returnCode;
+            }
+        }
+
+        private void acceptOrder_Click(object sender, RoutedEventArgs e)
+        {
+            List<Order> orders = DataBaseClass.dataBaseEntities.Order.ToList();
+
+            orders.Reverse();
+
+            Order lastOrder = orders.FirstOrDefault();
+
+            int lastOrderNumber = lastOrder.OrderNumber + 1;
+
+            List<Products> products = DataBaseClass.dataBaseEntities.Products.ToList();
+
+            foreach (Products product in productList.Items)
+            {
+
+            }  
         }
     }
 }

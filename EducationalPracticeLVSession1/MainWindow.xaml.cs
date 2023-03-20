@@ -37,6 +37,11 @@ namespace EducationalPracticeLVSession1
                 shoppingCartWindow = new ShoppingCartWindow(ProductsList.productsOrder, ProductsList.currentUser);
             }
             shoppingCartWindow.ShowDialog();
+
+            if (shoppingCartWindow.GetReturnCode == 1)
+            {
+                openOrder.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

@@ -56,7 +56,7 @@
                             <WrapPanel>
                                 <TextBox Uid="{Binding ProductArticleNumber}" Name="countBox" Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" TextChanged="countBox_TextChanged"></TextBox>
                                 <TextBlock Text="{Binding UnitsMeasurement.UnitName}" Margin="5,0,0,0"></TextBlock>
-                                <Button Uid="{Binding ProductArticleNumber}" Content="x" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,0,0,0"></Button>
+                                <Button Uid="{Binding ProductArticleNumber}" Name="deleteButton" Content="x" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,0,0,0" Click="deleteButton_Click"></Button>
                             </WrapPanel>
                             
                         </StackPanel>
@@ -70,7 +70,7 @@
             <TextBlock Name="fullAmount" Visibility="Collapsed"></TextBlock>
             <TextBlock Name="amountDiscount" Visibility="Collapsed"></TextBlock>
             <TextBlock Name="readyAmount"></TextBlock>
-            <Button Name="acceptOrder" Content="Оформить заказ"></Button>
+            <Button Name="acceptOrder" Content="Оформить заказ" Click="acceptOrder_Click"></Button>
         </StackPanel>
         
     </Grid>
