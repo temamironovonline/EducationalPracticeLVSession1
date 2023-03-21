@@ -71,10 +71,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\OrderPrice.cs" />
     <Compile Include="Classes\PhotoProductClass.cs" />
     <Compile Include="Classes\ColorProduct.cs" />
     <Compile Include="Classes\FrameNavigation.cs" />
     <Compile Include="Classes\CountProduct.cs" />
+    <Compile Include="Classes\OrderBackgroundColor.cs" />
+    <Compile Include="Pages\OrderListPage.xaml.cs">
+      <DependentUpon>OrderListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\OrderTicketWindow.xaml.cs">
+      <DependentUpon>OrderTicketWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ProductsList.xaml.cs">
       <DependentUpon>ProductsList.xaml</DependentUpon>
     </Compile>
@@ -123,6 +131,14 @@
     <Compile Include="Users.cs">
       <DependentUpon>DataBaseModel.tt</DependentUpon>
     </Compile>
+    <Page Include="Pages\OrderListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\OrderTicketWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ProductsList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

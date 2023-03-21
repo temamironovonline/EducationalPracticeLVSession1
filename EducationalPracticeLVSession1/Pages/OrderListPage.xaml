@@ -1,0 +1,26 @@
+﻿<Page x:Class="EducationalPracticeLVSession1.OrderListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EducationalPracticeLVSession1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OrderListPage">
+
+    <Page.Resources>
+        <BitmapImage x:Key="defaultImage" UriSource="/Resources/picture.png"></BitmapImage>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+
+
+        <Button Name="backButton" Content="Назад" Click="backButton_Click"></Button>
+
+    </Grid>
+</Page>

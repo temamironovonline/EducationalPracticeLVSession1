@@ -43,5 +43,10 @@ namespace EducationalPracticeLVSession1
                 openOrder.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void openOrders_Click(object sender, RoutedEventArgs e)
+        {
+            FrameNavigation.frame.Navigate(new OrderListPage());
+        }
     }
 }

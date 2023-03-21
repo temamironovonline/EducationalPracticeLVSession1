@@ -1,4 +1,4 @@
-﻿<Window x:Class="EducationalPracticeLVSession1.ShoppingCartWindow"
+﻿<Window x:Class="EducationalPracticeLVSession1.OrderTicketWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,21 +6,23 @@
         xmlns:local="clr-namespace:EducationalPracticeLVSession1"
         mc:Ignorable="d"
         Icon="/Resources/icon.ico"
-        Title="ПИШИ-СТИРАЙ - Корзина" Height="600" Width="1200"
-        MinHeight="600" MinWidth="1200">
+        Title="ПИШИ-СТИРАЙ - Талон на получение" Height="450" Width="800"
+        MinHeight="450"
+        MinWidth="800">
 
     <Window.Resources>
         <BitmapImage x:Key="defaultImage" UriSource="/Resources/picture.png"></BitmapImage>
     </Window.Resources>
     
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150*"></ColumnDefinition>
             <ColumnDefinition Width="400*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <WrapPanel Grid.Row="0" Grid.Column="0">
@@ -28,8 +30,20 @@
             <TextBlock Text="ПИШИ-СТИРАЙ" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
         </WrapPanel>
 
-        <ListView Name="productList" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch">
-            
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <TextBlock Name="userName" TextWrapping="Wrap" Margin="5"></TextBlock>
+            <TextBlock Name="dateOrder" Margin="5"></TextBlock>
+            <TextBlock Name="numberOrder" Margin="5"></TextBlock>
+            <TextBlock Name="costOrder" Margin="5"></TextBlock>
+            <TextBlock Name="amountDiscount" Margin="5"></TextBlock>
+            <TextBlock Name="deliveryPoint" TextWrapping="Wrap" Margin="5"></TextBlock>
+            <TextBlock Name="getCode" Margin="5" FontSize="15" FontWeight="DemiBold"></TextBlock>
+        </StackPanel>
+
+        <Button Name="getTicketButton" Content="Получить талон" Grid.Row="1" Grid.Column="0" Width="100" Height="30" VerticalAlignment="Bottom" Margin="5" Click="getTicketButton_Click"></Button>
+
+        <ListView Name="productList" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Stretch">
+
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel></StackPanel>
@@ -45,38 +59,23 @@
                             <TextBlock Text="{Binding ProductDescription}"></TextBlock>
                             <TextBlock Text="{Binding StringFormat=Производитель: {0}, Path=Manufacturers.ManufacturerName}"></TextBlock>
                             <WrapPanel>
-                                <TextBlock Uid="{Binding ProductID}" Name="priceBlock" Loaded="priceBlock_Loaded" Margin="0,0,5,0"></TextBlock>
-                                <TextBlock Uid="{Binding ProductID}" Name="discountPriceBlock" Visibility="Collapsed" Loaded="discountPriceBlock_Loaded" TextDecorations="Strikethrough"></TextBlock>
+                                <TextBlock Uid="{Binding ProductID}" Name="priceBlock" Margin="0,0,5,0"></TextBlock>
+                                <TextBlock Uid="{Binding ProductID}" Name="discountPriceBlock" Visibility="Collapsed" TextDecorations="Strikethrough"></TextBlock>
                             </WrapPanel>
-                            <TextBlock Uid="{Binding ProductID}" Name="currentDiscount" Visibility="Collapsed" Loaded="currentDiscount_Loaded" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Uid="{Binding ProductID}" Name="currentDiscount" Visibility="Collapsed" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
 
                         <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
                             <TextBlock Text="Количество:"></TextBlock>
                             <WrapPanel>
-                                <TextBox Uid="{Binding ProductArticleNumber}" Name="countBox" Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" TextChanged="countBox_TextChanged"></TextBox>
+                                <TextBlock Uid="{Binding ProductArticleNumber}" Name="countBox" Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"></TextBlock>
                                 <TextBlock Text="{Binding UnitsMeasurement.UnitName}" Margin="5,0,0,0"></TextBlock>
-                                <Button Uid="{Binding ProductArticleNumber}" Name="deleteButton" Content="x" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,0,0,0" Click="deleteButton_Click"></Button>
                             </WrapPanel>
-                            
                         </StackPanel>
                     </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
-            <TextBlock Text="Выберите пункт выдачи:" HorizontalAlignment="Center"></TextBlock>
-            <ComboBox Name="pointDelivery" Width="200"></ComboBox>
-        </StackPanel>
-        
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="10">
-            <TextBlock Name="userName" Visibility="Collapsed"></TextBlock>
-            <TextBlock Name="fullAmount" Visibility="Collapsed"></TextBlock>
-            <TextBlock Name="amountDiscount" Visibility="Collapsed"></TextBlock>
-            <TextBlock Name="readyAmount"></TextBlock>
-            <Button Name="acceptOrder" Content="Оформить заказ" Click="acceptOrder_Click"></Button>
-        </StackPanel>
-        
     </Grid>
 </Window>

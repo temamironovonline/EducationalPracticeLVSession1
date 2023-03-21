@@ -29,10 +29,16 @@ namespace EducationalPracticeLVSession1
         {
             InitializeComponent();
             currentUser = user;
+
             _mainWindow = (MainWindow)Application.Current.MainWindow;
             _mainWindow.Title = "ПИШИ-СТИРАЙ - Каталог товаров";
             _mainWindow.userName.Text = $"{user.UserSurname} {user.UserName} {user.UserPatronymic}";
             _mainWindow.navigationBar.Height = new GridLength(0.15, GridUnitType.Star);
+
+            if (currentUser.UserRole == 2 || currentUser.UserRole == 3)
+            {
+                _mainWindow.openOrders.Visibility = Visibility.Visible;
+            }
             SetProductList();
         }
 
@@ -145,6 +151,11 @@ namespace EducationalPracticeLVSession1
             countRecords.Text = $"{currentRecords} из {allRecords} записей";
 
             productList.ItemsSource = _productsSorting;
+
+            if (_productsSorting.Count == 0)
+            {
+                MessageBox.Show("Нет результатов", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
 
@@ -209,6 +220,25 @@ namespace EducationalPracticeLVSession1
             if (_mainWindow.openOrder.Visibility == Visibility.Collapsed)
             {
                 _mainWindow.openOrder.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void deleteProduct_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deleteProduct_Loaded(object sender, RoutedEventArgs e)
+        {
+            Button deleteButton = (Button)sender;
+
+            if (currentUser != null)
+            {
+                if (currentUser.UserRole == 2)
+                {
+                    deleteButton.Visibility = Visibility.Visible;
+                }
+               
             }
         }
     }

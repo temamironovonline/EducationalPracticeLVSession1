@@ -22,30 +22,48 @@ namespace EducationalPracticeLVSession1
 
             _orderProducts = orderProducts;
 
-            productList.ItemsSource = _orderProducts.ToList();
-
+            UploadedInformation();
             CalculateCostOrder();
         }
 
         private float _costAllProducts, _amountDiscount, _costWithDiscount;
 
+        private Users _user;
+
         public ShoppingCartWindow(List<Products> orderProducts, Users user)
         {
             InitializeComponent();
 
-            productList.ItemsSource = orderProducts.ToList();
+            _user = user;
+            _orderProducts = orderProducts;
             userName.Text = $"{user.UserSurname} {user.UserName} {user.UserPatronymic}";
             userName.Visibility = Visibility.Visible;
 
+            UploadedInformation();
             CalculateCostOrder();
         }
 
-        private void CalculateCostOrder()
+        private void UploadedInformation()
+        {
+            productList.ItemsSource = _orderProducts.ToList();
+
+            pointDelivery.Items.Add("Не выбрано");
+
+            List<DeliveryPoints> deliveryPoints = DataBaseClass.dataBaseEntities.DeliveryPoints.ToList();
+
+            foreach (DeliveryPoints deliveryPoint in deliveryPoints)
+            {
+                pointDelivery.Items.Add(deliveryPoint.PointName.ToString());
+            }
+
+            pointDelivery.SelectedIndex = 0;
+        }
+
+        private void CalculateCostOrder()   
         {
             _costAllProducts = 0;
             _amountDiscount = 0;
             _costWithDiscount = 0;
-
 
             fullAmount.Visibility = Visibility.Collapsed;
             amountDiscount.Visibility = Visibility.Collapsed;
@@ -175,20 +193,78 @@ namespace EducationalPracticeLVSession1
 
         private void acceptOrder_Click(object sender, RoutedEventArgs e)
         {
-            List<Order> orders = DataBaseClass.dataBaseEntities.Order.ToList();
-
-            orders.Reverse();
-
-            Order lastOrder = orders.FirstOrDefault();
-
-            int lastOrderNumber = lastOrder.OrderNumber + 1;
-
-            List<Products> products = DataBaseClass.dataBaseEntities.Products.ToList();
-
-            foreach (Products product in productList.Items)
+            if (pointDelivery.SelectedIndex != 0)
             {
+                List<Order> orders = DataBaseClass.dataBaseEntities.Order.ToList();
+                orders.Reverse();
+                Order lastOrder = orders.FirstOrDefault();
 
-            }  
+                int lastOrderNumber = lastOrder.OrderNumber + 1;
+
+                List<Products> products = DataBaseClass.dataBaseEntities.Products.ToList();
+
+                Random getCodeRandom = new Random();
+
+                int getCode = getCodeRandom.Next(100,1000);
+
+                bool checkAbundanceQuanity = true;
+
+                foreach (Products product in productList.Items)
+                {
+                    if (product.ProductQuantity < 3)
+                    {
+                        checkAbundanceQuanity = false;
+                        break;
+                    }
+                }
+
+                DateTime dateDelivery;
+                int daysDelivery;
+
+                if (checkAbundanceQuanity)
+                {
+                    dateDelivery = DateTime.Now.AddDays(3);
+                    daysDelivery = 3;
+                }
+                else
+                {
+                    dateDelivery = DateTime.Now.AddDays(6);
+                    daysDelivery = 6;
+                }
+
+                int? codeUser = null;
+
+                if (_user != null)
+                {
+                    codeUser = _user.UserID;
+                }
+
+                foreach (Products product in productList.Items)
+                {
+                    Order order = new Order()
+                    {
+                        OrderNumber = lastOrderNumber,
+                        OrderProduct = product.ProductID,
+                        OrderCountProduct = product.Count,
+                        OrderDate = DateTime.Now,
+                        DateDelivery = dateDelivery,
+                        PointDelivery = pointDelivery.SelectedIndex,
+                        CustomerID = codeUser,
+                        GetCode = getCode,
+                        OrderStatus = 1
+                    };
+
+                    DataBaseClass.dataBaseEntities.Order.Add(order);
+                }
+                DataBaseClass.dataBaseEntities.SaveChanges();
+
+                OrderTicketWindow orderTicketWindow = new OrderTicketWindow(DateTime.Now, daysDelivery, lastOrderNumber, dateDelivery, _orderProducts, _costWithDiscount, _amountDiscount, pointDelivery.SelectedItem.ToString(), getCode, _user);
+                orderTicketWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Укажите пункт выдачи", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }

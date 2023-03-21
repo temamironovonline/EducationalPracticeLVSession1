@@ -25,6 +25,7 @@
 
         <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Margin="350,0,0,0">
             <Button Name="openOrder" Click="openOrder_Click" Content="Корзина" Width="100" Visibility="Collapsed"></Button>
+            <Button Name="openOrders" Click="openOrders_Click" Content="Корзина" Width="100" Visibility="Collapsed"></Button>
         </WrapPanel>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Margin="650,0,0,0">
